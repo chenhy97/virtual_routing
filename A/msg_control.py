@@ -37,10 +37,10 @@ def init_recv(src_name,data_IP,data_PORT):
     receive_socket = socket.socket()
     receive_socket.bind(addr)
     receive_socket.listen(10)
+    print("trans....")
+    newSocket, destAddr = receive_socket.accept()
+    print("transed", destAddr)
     while True:
-        print("trans....")
-        newSocket, destAddr = receive_socket.accept()
-        print("transed", destAddr)
         datalength = calcsize('128s12s5s')
         data = newSocket.recv(datalength)
         decode_msg,decode_src_ip,decode_dest_name = unpack('128s12s5s',data)
@@ -54,8 +54,7 @@ def init_recv(src_name,data_IP,data_PORT):
         #print("received"+str(route_PORT))
         next_IP = ip_dict[next_matric_name]
         next_PORT =RoutePort_list[next_matric_name]
-        print(msg,src_name,dest_name,next_matric_name)
-        newSocket.close()
+        #newSocket.close()
         transport_socket = socket.socket()
         transport_socket.connect((next_IP,next_PORT))
         transport_socket.send(data2)

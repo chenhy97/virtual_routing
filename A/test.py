@@ -12,6 +12,7 @@ def send_Session_layer(data_IP,data_PORT):#dest_name新设一个点
         dest_name = input("To where:")
         data = pack('128s12s5s',msg.encode('utf-8'),src_ip.encode('utf-8'),dest_name.encode('utf-8'))
         talk.send(data)
+        #talk.close()
 
 if __name__ == '__main__':
     send_Session_layer(DATA_IP,DATA_PORT)
