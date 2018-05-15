@@ -32,7 +32,6 @@ def receiver(route):
     PORT = PC_PORT
     ADDR = (HOST,PORT)
     recSocket = socket.socket()
-    print("fuck")
     #recSocket.setsockopt(SOL_SOCKET,SO_REUSEADDR,1)
     recSocket.bind(ADDR)
     recSocket.listen(10)

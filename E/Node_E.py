@@ -9,8 +9,8 @@ if __name__ == '__main__':
     command = 'DV'
     p1 = mp.Process(target = sender,args = (command,route,))
     p2 = mp.Process(target = receiver,args = (route,))
-    p3 = mp.Process(target=init_recv, args=(PC_IP, DATA_IP, DATA_PORT, ROUTE_PORT))
-    p4 = mp.Process(target=trans_show(ip_dict[PC_IP], ROUTE_PORT))
+    p3 = mp.Process(target=init_recv, args=(PC_IP, DATA_IP, DATA_PORT,))
+    p4 = mp.Process(target=trans_show,args =(ip_dict[PC_IP], ROUTE_PORT,))
     p1.start()
     p2.start()
     p3.start()

@@ -1,10 +1,12 @@
 from A.basic_A import *
 import socket
+from struct import *
 MY_IP = '127.0.0.1'
 def send_Session_layer(data_IP,data_PORT):#dest_name新设一个点
     talk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     src_ip = MY_IP
-    talk.connect(data_IP,data_PORT)
+    addr = (data_IP,data_PORT)
+    talk.connect(addr)
     while True:
         msg = input("Route A:")
         dest_name = input("To where:")

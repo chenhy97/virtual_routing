@@ -20,11 +20,7 @@ class Route_info:#路由表类
         self.__get_map()
         neighbour_list = list(neighbour.keys())
         neighbour_list.remove(dest)
-        print(neighbour_list)
         delete_list = []
-        for value in self.__map.keys():
-            print('***')
-            print(value)
         for value in self.__map.keys():     #将dest从map中删除
             if value[0] == dest:
                 delete_list.append(value)
@@ -78,8 +74,6 @@ class Route_info:#路由表类
             pass
         elif cmd == 'DV':
             dest = None
-            for value in index.keys():
-                print(value)
             for value in index.keys():
                 self.__map[value] = index[value]
                 dest = value[0]

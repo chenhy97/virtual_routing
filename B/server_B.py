@@ -10,7 +10,6 @@ def receive_thread(newSocket,address,route):
         data_gram = newSocket.recv(BUF_SIZE)
         if(len(data_gram) > 0):
             count = 0
-            print(address[1])
             for temp in port_dict.keys():
                 if address[1] == temp:
                      file_name = port_dict[temp] + '.json'

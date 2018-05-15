@@ -15,7 +15,7 @@ def porttoname(target_port):
 
 def read_list(mypc_name):#trans routing_list.json to list_dict
     list_dict = {}
-    with open(ROUTING_LIST) as json_file:
+    with open(ROUTING_LIST,'r') as json_file:
         whole_list = json.load(json_file)
     for temp in whole_list.keys():
         if temp[0] == mypc_name:
@@ -31,7 +31,7 @@ def get_next_matric(list_dict,dest_name):
 
 
 
-def init_recv(src_name,data_IP,data_PORT,route_PORT):
+def init_recv(src_name,data_IP,data_PORT):
     addr = (data_IP,data_PORT)
     receive_socket = socket.socket()
     receive_socket.bind(addr)
@@ -40,11 +40,11 @@ def init_recv(src_name,data_IP,data_PORT,route_PORT):
         print("trans....")
         newSocket, destAddr = receive_socket.accept()
         print("transed", destAddr)
-        datalength = calcsize('128s12s5s5s')
+        datalength = calcsize('128s12s5s')
         data = newSocket.recv(datalength)
         if data == 0:####only add in this file
             continue
-        decode_msg,decode_src_ip,decode_dest_name = unpack('128s12s5s5s',data)
+        decode_msg,decode_src_ip,decode_dest_name = unpack('128s12s5s',data)
         msg = (decode_msg.decode('utf-8')).strip('\0')
         src_ip = (decode_src_ip.decode('utf-8')).strip('\0')
         dest_name = (decode_dest_name.decode('utf-8')).strip('\0')
@@ -54,7 +54,9 @@ def init_recv(src_name,data_IP,data_PORT,route_PORT):
                     next_matric_name.encode('utf-8'))
         newSocket.close()
         transport_socket = socket.socket()
-        transport_socket.connect((data_IP,route_PORT))
+        next_IP = ip_dict[next_matric_name]
+        next_PORT = RoutePort_list[next_matric_name]
+        transport_socket.connect((next_IP,next_PORT))
         transport_socket.send(data2)
         transport_socket.close()
 
@@ -67,11 +69,11 @@ def trans_show(route_IP,route_PORT):
         print("connecting....")
         newSocket,destAddr = receive_socket.accept()
         print("connected",destAddr)
-        datalength = calcsize('128s5s5s5s')
+        datalength = calcsize('128s5s5s')
         data = newSocket.recv(datalength)
         decode_msg,decode_src_name,decode_dest_name,decode_next_matric_name = unpack('128s5s5s5s',data)
         msg = (decode_msg.decode('utf-8')).strip('\0')
-        src_name = (decode_src_name.decode('utf-8')).strip('\0')
+        src_name = (decode_next_matric_name.decode('utf-8')).strip('\0')
         dest_name = (decode_dest_name.decode('utf-8')).strip('\0')
         next_matric_name = (decode_next_matric_name.decode('utf-8')).strip('\0')
         if dest_name == next_matric_name:
@@ -83,6 +85,8 @@ def trans_show(route_IP,route_PORT):
                         next_matric_name.encode('utf-8'))
             newSocket.close()
             transport_socket = socket.socket()
-            transport_socket.connect((route_IP,route_PORT))
+            next_IP = ip_dict[next_matric_name]
+            next_PORT = RoutePort_list[next_matric_name]
+            transport_socket.connect((next_IP,next_PORT))
             transport_socket.send(data)
             transport_socket.close()
