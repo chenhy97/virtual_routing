@@ -94,7 +94,7 @@ class Route_info:#路由表类
             for value in index.keys():
                 new_length = length + self.__map[value][0]
                 if new_length < self.__map[addr + value[1]][0]:
-                    self.__map[addr + value[1]] = (new_length,dest)
+                    self.__map[addr + value[1]] = (new_length,self.__map[addr + dest][1])
             for value in self.__map.keys():
                 temp = self.__map[value][1]
                 if value[0] == PC_IP and temp != value[1] and temp != PC_IP:
