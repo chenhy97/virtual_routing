@@ -26,6 +26,7 @@ PC_PORT = 12333
 
 DATA_IP = '127.0.0.1'
 DATA_PORT = 16000
+RECV_DATA_PORT = 17000
 ROUTE_PORT = 15000
 RoutePort_list = {'1':15000,'2':25000,'3':35000,'4':45000,'5':55000}
 ip_dict = {'1':IP_A,'2':IP_B,'3':IP_C,'4':IP_D,'5':IP_E}

@@ -15,6 +15,18 @@ class Route_info:#路由表类
     def __get_map(self):
         with open(ROUTING_LIST) as json_file:
             self.__map = json.load(json_file)
+    def show_map(self):
+        self.__get_map()
+        dict_list = []
+        for temp in self.__map.keys():
+            if temp[0] not in dict_list:
+                dict_list.append(temp[0])
+        for value in dict_list:
+            value_index = {}
+            for temp in self.__map.keys():
+                if temp[0] == value:
+                    value_index[temp] = self.__map[temp]
+            print(value_index)
 
     def shut_down(self,dest):
         self.__get_map()
@@ -124,6 +136,6 @@ if __name__ == '__main__':
         addr = str(i)
         for j in range(1,6):
             dest = str(j)
-            value.init_add(addr + dest,(j,dest))
-    value.shut_down('2')
+            value.init_add_neighbor(addr + dest,(j,dest))
+    value.show_map()
 
