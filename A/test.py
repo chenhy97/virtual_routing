@@ -18,7 +18,7 @@ def send_Session_layer(data_IP,data_PORT):#dest_name新设一个点
         talk.send(data)
         #talk.close()
 def receive_Session_layer():
-    receiver = socket.socket
+    receiver = socket.socket()
     HOST = MY_IP
     PORT = RECV_DATA_PORT
     ADDR = (HOST, PORT)
@@ -27,9 +27,9 @@ def receive_Session_layer():
     recSocket.bind(ADDR)
     recSocket.listen(10)
     while True:
-        print("reciving connecting....")
+        #print("reciving connecting....")
         newSocket, destAddr = recSocket.accept()
-        print("connected", destAddr)
+        #print("connected", destAddr)
         size = calcsize('128s5s5s')
         data = newSocket.recv(size)
         temp_msg,temp_cmd,temp_src_name = unpack('128s5s5s', data)
@@ -39,7 +39,7 @@ def receive_Session_layer():
         if cmd == "S":
             print(msg)
         if cmd == "R":
-            print(src_name)
+            print("From the request of : " + src_name)
         newSocket.close()
 if __name__ == '__main__':
     print('input send to send message, input receive to receive message')

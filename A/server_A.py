@@ -17,8 +17,8 @@ def receive_thread(newSocket,address,route):
                 json_obj.write(data_gram)
             name = datagram(json_name = file_name)
             route.update_route(name.command,name.index)
-            route.show_map()
-            print('***********************')
+            #route.show_map()
+            #print('***********************')
         else:
             count = count + 1
             if count == 60:

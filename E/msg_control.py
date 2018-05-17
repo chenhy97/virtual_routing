@@ -104,20 +104,16 @@ def trans_show(route_IP,route_PORT):
             respose = 'R'
             res_msg = "ping back..."
             list_dict = read_list(current_name)
-            print(list_dict)
-            print(src_name)
             ping_socket = socket.socket()
             ping_next_matric = get_next_matric(list_dict,src_name)
             ping_next_ip = ip_dict[ping_next_matric]
             ping_next_port = RoutePort_list[ping_next_matric]
-            print(ping_next_matric)
             ping_socket.connect((ping_next_ip,ping_next_port))
             ping_data = pack("128s5s5s5s5s", res_msg.encode('utf-8'),respose.encode('utf-8'), current_name.encode('utf-8'),src_name.encode('utf-8'),ping_next_matric.encode('utf-8'))
             ping_socket.send(ping_data)
             ping_socket.close()
         if cmd == 'R':
             if dest_name == next_matric_name:
-                print(msg)
                 to_client_socket = socket.socket()
                 to_client_socket.connect((IP, PORT))
                 data = pack("128s5s5s", msg.encode('utf-8'),cmd.encode('utf-8'),src_name.encode('utf-8'))
